@@ -1,0 +1,1 @@
+console.log("加载script1.js成功");
