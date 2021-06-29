@@ -14,13 +14,13 @@
 
 针对上述理论，我们编写了一段测试案例，页面包含了两个`script`标签的加载，给他们都加上了`defer`标识，其中给`script1.js`添加了1s的延迟，给`script2.js`添加了2s的延迟。
 
-<img src="/Users/huangjiahao/personalData/技术笔记文章/图解script标签中的async与defer属性/image-20210628152514874.png" alt="image-20210628152514874" style="zoom:50%;" />
+<img src="http://notepicture.cn-gd.ufileos.com/scriptTagDiffBetweenDeferAndAsync/image-20210628152514874.png" alt="image-20210628152514874" style="zoom:50%;" />
 
 下图是页面加载的过程和`script`脚本的输出顺序。不难看出虽然`script1.js`的加载时长比`script2.js`短，但是因为defer的限制，所以`script1.js`只能等前边的脚本执行完毕后才能执行。
 
-<img src="/Users/huangjiahao/personalData/技术笔记文章/图解script标签中的async与defer属性/image-20210628153819618-4865921.png" alt="image-20210628153819618" style="zoom: 33%;" />
+<img src="http://notepicture.cn-gd.ufileos.com/scriptTagDiffBetweenDeferAndAsync/image-20210628153819618-4865921.png" alt="image-20210628153819618" style="zoom: 33%;" />
 
-<img src="/Users/huangjiahao/personalData/技术笔记文章/图解script标签中的async与defer属性/image-20210628155212350-4866742.png" alt="image-20210628155212350" style="zoom:33%;" />
+<img src="http://notepicture.cn-gd.ufileos.com/scriptTagDiffBetweenDeferAndAsync/image-20210628155212350-4866742.png" alt="image-20210628155212350" style="zoom:33%;" />
 
 
 
@@ -30,19 +30,19 @@
 
 修改上述案例代码如下：
 
-<img src="/Users/huangjiahao/personalData/技术笔记文章/图解script标签中的async与defer属性/image-20210628160022121.png" alt="image-20210628160022121" style="zoom: 50%;" />
+<img src="http://notepicture.cn-gd.ufileos.com/scriptTagDiffBetweenDeferAndAsync/image-20210628160022121.png" alt="image-20210628160022121" style="zoom: 50%;" />
 
 下图是页面加载的过程和`script`脚本的输出顺序。虽然页面加载时长上并没有什么变化，但是可以注意到一个细节的是，`DOMContentLoaded`事件触发并不受`async`脚本加载的影响，在脚本加载前就已经触发了`DOMContentLoaded`。
 
-<img src="/Users/huangjiahao/personalData/技术笔记文章/图解script标签中的async与defer属性/image-20210628160515332.png" alt="image-20210628160515332" style="zoom:33%;" />
+<img src="http://notepicture.cn-gd.ufileos.com/scriptTagDiffBetweenDeferAndAsync/image-20210628160515332.png" alt="image-20210628160515332" style="zoom:33%;" />
 
-<img src="/Users/huangjiahao/personalData/技术笔记文章/图解script标签中的async与defer属性/image-20210628160627492.png" alt="image-20210628160627492" style="zoom:33%;" />
+<img src="http://notepicture.cn-gd.ufileos.com/scriptTagDiffBetweenDeferAndAsync/image-20210628160627492.png" alt="image-20210628160627492" style="zoom:33%;" />
 
 ## 总结
 
 下面来画多个脚本加载时的甘特图，拿四个不同的颜色来标明各自代表的含义：
 
-<img src="/Users/huangjiahao/personalData/技术笔记文章/图解script标签中的async与defer属性/image-20210628165937483.png" alt="image-20210628165937483" style="zoom:50%;" />
+<img src="http://notepicture.cn-gd.ufileos.com/scriptTagDiffBetweenDeferAndAsync/image-20210628165937483.png" alt="image-20210628165937483" style="zoom:50%;" />
 
 ### 普通script
 
@@ -50,7 +50,7 @@
 
 资源的下载是在解析过程中进行的，虽然说`script1.js`会比较快加载完毕，但是他前面的`script2.js`并没有加载并且执行，所以他只能处于一个挂起的状态，等待`script2.js`执行完毕后再执行。当这两个脚本都执行完毕了再继续解析页面。
 
-![image-20210628172149936](/Users/huangjiahao/personalData/技术笔记文章/图解script标签中的async与defer属性/image-20210628172149936.png)
+<img src="http://notepicture.cn-gd.ufileos.com/scriptTagDiffBetweenDeferAndAsync/image-20210628172149936.png" alt="image-20210628172149936.png" style="zoom:50%;" />
 
 ### defer
 
@@ -58,7 +58,7 @@
 
 如果你的脚本代码依赖于页面中的`DOM`元素（文档是否解析完毕），或者被其他脚本文件依赖，则使用`defer`属性。
 
-![image-20210628172241073](/Users/huangjiahao/personalData/技术笔记文章/图解script标签中的async与defer属性/image-20210628172241073.png)
+<img src="http://notepicture.cn-gd.ufileos.com/scriptTagDiffBetweenDeferAndAsync/image-20210628172241073.png" alt="image-20210628172241073.png" style="zoom:50%;" />
 
 ### async
 
@@ -66,6 +66,14 @@
 
 如果你的脚本并不关心页面中的`DOM`元素（文档是否解析完毕），并且也不会产生其他脚本需要的数据，则使用`async`属性。
 
-![image-20210628172423241](/Users/huangjiahao/personalData/技术笔记文章/图解script标签中的async与defer属性/image-20210628172423241.png)
+<img src="http://notepicture.cn-gd.ufileos.com/scriptTagDiffBetweenDeferAndAsync/image-20210628172423241.png" alt="image-20210628172423241.png" style="zoom:50%;" />
 
-![image-20210628172641002](/Users/huangjiahao/personalData/技术笔记文章/图解script标签中的async与defer属性/image-20210628172641002.png)
+<img src="http://notepicture.cn-gd.ufileos.com/scriptTagDiffBetweenDeferAndAsync/image-20210628172641002.png" alt="image-20210628172641002.png" style="zoom:50%;" />
+
+## 资料
+
+代码链接：https://github.com/Wutongjiaojiajia/scriptTagDiffBetweenDeferAndAsync
+
+`clone`后执行`npm start`即可运行。
+
+
